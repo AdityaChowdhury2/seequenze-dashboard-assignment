@@ -10,10 +10,6 @@ const router = createBrowserRouter([
 			{
 				path: '/',
 				element: <Images />,
-				loader: async () => {
-					const response = await fetch('http://localhost:5000/images');
-					return await response.json();
-				},
 			},
 		],
 	},

@@ -16,7 +16,7 @@ const Navbar = () => {
 					>
 						<div className="flex flex-col">
 							<p className="text-lg font-semibold">
-								Free Trail |
+								Free Trail |{' '}
 								<span className="text-base font-normal">2 days left</span>
 							</p>
 							<p className="text-[#FA782F] text-sm">Extend Free trail</p>

@@ -1,19 +1,12 @@
 import { FaPlus } from 'react-icons/fa6';
 import AddImageModal from '../modals/AddImageModal';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+
 import SkeletonCard from '../SkeletonCard';
-import { FaEdit } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
+import ImageCard from './ImageCard';
+import useGetImages from '../../hooks/useGetImages';
 
 const Images = () => {
-	const { data: allImages, isLoading } = useQuery({
-		queryKey: ['images'],
-		queryFn: async () => {
-			const response = await axios(`${import.meta.env.VITE_SERVER_URL}/images`);
-			return response.data;
-		},
-	});
+	const { allImages, isLoading } = useGetImages();
 	const handleClose = () => document.getElementById('addImage_modal').close();
 
 	return (
@@ -39,26 +32,8 @@ const Images = () => {
 					</>
 				) : (
 					<>
-						{allImages.map(image => (
-							<div key={image.id} className="card bg-base-100 shadow-xl">
-								<img
-									className="object-cover w-full h-48 rounded-t-lg"
-									src={image.download_url}
-									alt={image.author}
-								/>
-
-								<div className="card-body">
-									<h2 className="card-title">{image.author}</h2>
-									<div className="flex gap-4">
-										<button className="text-orange-50 bg-[var(--primary-color)] hover:bg-[var(--primary-color-dark)] p-2 rounded-lg">
-											<FaEdit />
-										</button>
-										<button className="text-red-50bg-red-600 ac bg-red-600 hover:bg-red-700  p-2 rounded-lg">
-											<MdDelete />
-										</button>
-									</div>
-								</div>
-							</div>
+						{allImages?.map(image => (
+							<ImageCard key={image.id} image={image} />
 						))}
 					</>
 				)}

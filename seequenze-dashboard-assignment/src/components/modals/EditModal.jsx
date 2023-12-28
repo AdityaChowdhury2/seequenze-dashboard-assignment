@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import useGetImages from '../../hooks/useGetImages';
 
-const AddImageModal = ({ handleClose }) => {
+const EditModal = ({ image, handleClose }) => {
 	const { refetch } = useGetImages();
 	const {
 		handleSubmit,
@@ -12,9 +12,12 @@ const AddImageModal = ({ handleClose }) => {
 		formState: { errors },
 	} = useForm();
 	const onSubmit = async data => {
-		const response = await axios.post('http://localhost:5000/images', data);
-
-		if (response.data.insertId) {
+		const response = await axios.patch(
+			`http://localhost:5000/images/${image.id}`,
+			data
+		);
+		console.log(response.data);
+		if (response.data.changedRows) {
 			Swal.fire({
 				position: 'top-end',
 				icon: 'success',
@@ -22,13 +25,12 @@ const AddImageModal = ({ handleClose }) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			handleClose();
 			refetch();
 		}
+		handleClose(image.id);
 	};
-
 	return (
-		<dialog id="addImage_modal" className="modal">
+		<dialog id={`image-edit-${image.id}`} className="modal">
 			<div className="modal-box">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<label className="form-control w-full ">
@@ -37,9 +39,8 @@ const AddImageModal = ({ handleClose }) => {
 						</div>
 						<input
 							type="text"
-							{...register('author', {
-								required: 'Required',
-							})}
+							{...register('author', { required: true })}
+							defaultValue={image.author}
 							placeholder="Type here"
 							className="input input-bordered w-full "
 						/>
@@ -55,8 +56,9 @@ const AddImageModal = ({ handleClose }) => {
 						</div>
 						<input
 							type="text"
+							defaultValue={image.url}
 							{...register('url', {
-								required: 'Required',
+								required: true,
 								pattern: {
 									value:
 										/(http(s)?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
@@ -73,7 +75,7 @@ const AddImageModal = ({ handleClose }) => {
 						) : (
 							errors.url?.type === 'pattern' && (
 								<span className="text-red-600 text-sm">
-									{errors.url.message}
+									{errors.url?.message}
 								</span>
 							)
 						)}
@@ -84,8 +86,9 @@ const AddImageModal = ({ handleClose }) => {
 						</div>
 						<input
 							type="text"
+							defaultValue={image.download_url}
 							{...register('download_url', {
-								required: 'Required',
+								required: true,
 								pattern: {
 									value:
 										/(http(s)?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
@@ -102,7 +105,7 @@ const AddImageModal = ({ handleClose }) => {
 						) : (
 							errors.download_url?.type === 'pattern' && (
 								<span className="text-red-600 text-sm">
-									{errors.url.message}
+									{errors.url?.message}
 								</span>
 							)
 						)}
@@ -110,7 +113,10 @@ const AddImageModal = ({ handleClose }) => {
 					<div className="mt-5 flex justify-center gap-5">
 						<button className="btn btn-success">Save</button>
 
-						<button className="btn btn-error" onClick={handleClose}>
+						<button
+							className="btn btn-error"
+							onClick={() => handleClose(image.id)}
+						>
 							Cancel
 						</button>
 					</div>
@@ -120,8 +126,8 @@ const AddImageModal = ({ handleClose }) => {
 	);
 };
 
-export default AddImageModal;
-
-AddImageModal.propTypes = {
+EditModal.propTypes = {
 	handleClose: PropTypes.func,
+	image: PropTypes.object,
 };
+export default EditModal;

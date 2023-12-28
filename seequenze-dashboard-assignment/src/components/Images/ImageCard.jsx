@@ -28,13 +28,15 @@ const ImageCard = ({ image }) => {
 			confirmButtonText: 'Yes, delete it!',
 		}).then(result => {
 			if (result.isConfirmed) {
-				axios.delete(`${import.meta.env.VITE_SERVER_URL}/images/${id}`);
+				axios
+					.delete(`${import.meta.env.VITE_SERVER_URL}/images/${id}`)
+					.then(() => refetch());
+
 				Swal.fire({
 					title: 'Deleted!',
 					text: 'Your file has been deleted.',
 					icon: 'success',
 				});
-				refetch();
 			}
 		});
 	};

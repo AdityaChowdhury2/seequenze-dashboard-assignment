@@ -13,7 +13,7 @@ const EditModal = ({ image, handleClose }) => {
 	} = useForm();
 	const onSubmit = async data => {
 		const response = await axios.patch(
-			`http://localhost:5000/images/${image.id}`,
+			`${import.meta.env.VITE_SERVER_URL}/images/${image.id}`,
 			data
 		);
 		console.log(response.data);

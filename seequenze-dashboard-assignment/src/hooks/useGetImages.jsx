@@ -5,6 +5,7 @@ const useGetImages = () => {
 		data: allImages,
 		isLoading,
 		refetch,
+		isError,
 	} = useQuery({
 		queryKey: ['images'],
 		queryFn: async () => {
@@ -12,7 +13,7 @@ const useGetImages = () => {
 			return response.data;
 		},
 	});
-	return { allImages, isLoading, refetch };
+	return { allImages, isLoading, refetch, isError };
 };
 
 export default useGetImages;

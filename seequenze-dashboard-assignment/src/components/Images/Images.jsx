@@ -6,7 +6,7 @@ import ImageCard from './ImageCard';
 import useGetImages from '../../hooks/useGetImages';
 
 const Images = () => {
-	const { allImages, isLoading } = useGetImages();
+	const { allImages, isLoading, isError } = useGetImages();
 	const handleClose = () => document.getElementById('addImage_modal').close();
 
 	return (
@@ -30,6 +30,8 @@ const Images = () => {
 							<SkeletonCard key={key} />
 						))}
 					</>
+				) : isError || allImages?.errno ? (
+					<>No Data Found</>
 				) : (
 					<>
 						{allImages?.map(image => (

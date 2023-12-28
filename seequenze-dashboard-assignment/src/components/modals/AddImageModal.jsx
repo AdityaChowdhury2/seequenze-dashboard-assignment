@@ -9,11 +9,15 @@ const AddImageModal = ({ handleClose }) => {
 	const {
 		handleSubmit,
 		register,
+		reset,
 		formState: { errors },
 	} = useForm();
 	const onSubmit = async data => {
-		const response = await axios.post('http://localhost:5000/images', data);
-
+		const response = await axios.post(
+			`${import.meta.env.VITE_SERVER_URL}/images`,
+			data
+		);
+		console.log(response.data.insertId);
 		if (response.data.insertId) {
 			Swal.fire({
 				position: 'top-end',
@@ -22,6 +26,7 @@ const AddImageModal = ({ handleClose }) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
+			reset();
 			handleClose();
 			refetch();
 		}
@@ -30,6 +35,12 @@ const AddImageModal = ({ handleClose }) => {
 	return (
 		<dialog id="addImage_modal" className="modal">
 			<div className="modal-box">
+				<form method="dialog">
+					{/* if there is a button in form, it will close the modal */}
+					<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+						✕
+					</button>
+				</form>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<label className="form-control w-full ">
 						<div className="label">
@@ -109,10 +120,6 @@ const AddImageModal = ({ handleClose }) => {
 					</label>
 					<div className="mt-5 flex justify-center gap-5">
 						<button className="btn btn-success">Save</button>
-
-						<button className="btn btn-error" onClick={handleClose}>
-							Cancel
-						</button>
 					</div>
 				</form>
 			</div>

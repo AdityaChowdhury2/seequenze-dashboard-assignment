@@ -16,9 +16,9 @@ Follow these steps to set up and run the project locally:
 
 3. **Navigate to Client Side folder:**
 
-```
-  cd seequenze-dashboard-assignment-client
-```
+   ```
+   cd seequenze-dashboard-assignment-client
+   ```
 
 4. **Install Dependencies:**
 
@@ -35,8 +35,6 @@ Follow these steps to set up and run the project locally:
    ```
    npm run dev
    ```
-
-   add
 
 Open your browser and visit http://localhost:5173 to view the app.
 

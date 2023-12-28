@@ -1,5 +1,9 @@
 # Seequenze Technologies Assignment
 
+## My challenges
+
+    I am a MERN stack Developer. In my projects I always used mongodb as a database. But it was challenging for me to implement mysql as database in this assignment.
+
 Follow these steps to set up and run the project locally:
 
 1. **Clone the Repository:**

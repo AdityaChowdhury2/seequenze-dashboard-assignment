@@ -84,7 +84,7 @@ const AddImageModal = ({ handleClose }) => {
 						) : (
 							errors.url?.type === 'pattern' && (
 								<span className="text-red-600 text-sm">
-									{errors.url.message}
+									{errors.url?.message}
 								</span>
 							)
 						)}
@@ -113,7 +113,7 @@ const AddImageModal = ({ handleClose }) => {
 						) : (
 							errors.download_url?.type === 'pattern' && (
 								<span className="text-red-600 text-sm">
-									{errors.url.message}
+									{errors.download_url?.message}
 								</span>
 							)
 						)}

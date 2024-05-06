@@ -38,4 +38,5 @@ Follow these steps to set up and run the project locally:
 
 Open your browser and visit http://localhost:5173 to view the app.
 
-[Live Link](https://seequenze-assignment.netlify.app)
+
+[Live Link](https://react-express-mysql.netlify.app)
